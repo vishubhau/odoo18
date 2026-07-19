@@ -26,6 +26,11 @@ RUN wget https://github.com/wkhtmltopdf/packaging/releases/download/0.12.6.1-2/w
 # Copy code and install python dependencies
 WORKDIR /app
 COPY . /app
+# Add this line right before running your standard requirements.txt
+RUN pip install --no-cache-dir "setuptools<60" "Cython<3.0.0" wheel
+
+RUN pip install --no-cache-dir -r requirements.txt
+# ... remaining steps ...
 RUN pip install --no-cache-dir -r requirements.txt
 
 # Create standard directories for runtime
