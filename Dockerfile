@@ -26,12 +26,11 @@ RUN wget https://github.com/wkhtmltopdf/packaging/releases/download/0.12.6.1-2/w
 # Copy code and install python dependencies
 WORKDIR /app
 COPY . /app
-# Add this line right before running your standard requirements.txt
+# Step 6: Install your pinned compilation tools globally
 RUN pip install --no-cache-dir "setuptools<60" "Cython<3.0.0" wheel
 
-RUN pip install --no-cache-dir -r requirements.txt
-# ... remaining steps ...
-RUN pip install --no-cache-dir -r requirements.txt
+# Step 7: Install requirements using the globally pinned tools
+RUN pip install --no-cache-dir --no-build-isolation -r requirements.txt
 
 # Create standard directories for runtime
 RUN mkdir -p /var/lib/odoo /etc/odoo
