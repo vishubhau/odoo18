@@ -41,4 +41,10 @@ EXPOSE 8069
 
 # Execution Command
 ENV ODOO_RC=/etc/odoo/odoo.conf
+# Create a system user if one doesn't exist, change ownership of the app directory
+RUN useradd -m -U -r -s /bin/bash odoo && \
+    chown -R odoo:odoo /app /var/lib/odoo
+
+# Switch away from root to the new user
+USER odoo
 CMD ["python3", "odoo-bin"]
